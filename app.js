@@ -11,8 +11,11 @@ class Book {
   }
 }
 
-// let titleValue = "";
-// let authorValue = "";
+let title = document.getElementById("title");
+let author = document.getElementById("author");
+let checkedBox = document.getElementById("read");
+let btn = document.getElementById("btn");
+let inputRow = document.getElementById("inputRow");
 
 class Library {
   constructor() {
@@ -20,44 +23,58 @@ class Library {
     this.bookCount = 0;
     this.books = [];
   }
+
+  updateBookList(book) {
+    console.log("inside of the updateBookList");
+    console.log(book);
+  }
+
   addBook() {
-    let title = document.getElementById("title");
-    let author = document.getElementById("author");
-    let checkedBox = document.getElementById("read");
-    let btn = document.getElementById("btn");
-    let inputRow = document.getElementById("inputRow");
+    let titleValue = title.value;
+    let authorValue = author.value;
+    let checkedValue = checkedBox.checked;
+    console.log(titleValue, authorValue, checkedValue);
+    let id = Math.random();
+    let addBook = new Book(id, titleValue, authorValue, checkedValue);
+    console.log(addBook);
+    //need to push it to the book array
+    this.books.push(addBook);
+    console.log(this.books);
+    //update the dom
+    this.updateBookList(addBook);
+  }
 
-    let titleValue = "";
-    let authorValue = "";
+  removeBook() {
+    console.log("hello, remove book works!");
+  }
 
-    btn.addEventListener("click", () => {
-      titleValue = title.value;
-      authorValue = author.value;
-      let checkedValue = checkedBox.checked;
-      console.log(titleValue, authorValue, checkedValue);
-      let id = Math.random();
-      let addBook = new Book(id, titleValue, authorValue, checkedValue);
-      console.log(addBook);
-      let newTitle = document.createElement("td");
-      let newAuthor = document.createElement("td");
-      let newCheckBox = document.createElement("td");
-      newTitle.textContent = titleValue;
-      newAuthor.textContent = authorValue;
-      let isChecked = checkedValue === true ? "checked" : "";
-      newCheckBox.innerHTML = `<input type="checkbox" ${isChecked} disabled/>`;
-      console.log(newTitle, newAuthor, newCheckBox);
-      let newRow = document.createElement("tr");
-      newRow.append(newTitle, newAuthor, newCheckBox);
-      console.log(newRow);
-      document.querySelector("tbody").insertBefore(newRow, inputRow);
-      document.getElementById("title").value = "";
-      document.getElementById("author").value = "";
-      this.bookCount += 1;
-    });
-    //nothing shows up even if global scoped variable
-    console.log(titleValue, authorValue);
+  updateBookList(obj) {
+    console.log(obj);
+    let newTitle = document.createElement("td");
+    let newAuthor = document.createElement("td");
+    let newCheckBox = document.createElement("td");
+    let addButtonCol = document.createElement("td");
+    let rmButtonCol = document.createElement("td");
+    let removeBook = document.createElement("button");
+    removeBook.textContent = "Remove Book";
+    removeBook.addEventListener("click", this.removeBook);
+    rmButtonCol.appendChild(removeBook);
+    newTitle.textContent = obj.title;
+    newAuthor.textContent = obj.author;
+    let isChecked = obj.read === true ? "checked" : "";
+    newCheckBox.innerHTML = `<input type="checkbox" ${isChecked} disabled/>`;
+    console.log(newTitle, newAuthor, newCheckBox);
+    let newRow = document.createElement("tr");
+    newRow.append(newTitle, newAuthor, newCheckBox, addButtonCol, rmButtonCol);
+    console.log(newRow);
+    document.querySelector("tbody").insertBefore(newRow, inputRow);
+    document.getElementById("title").value = "";
+    document.getElementById("author").value = "";
   }
 }
 
 let lib = new Library();
-lib.addBook();
+
+btn.addEventListener("click", () => {
+  lib.addBook(lib.books, lib.bookCount, lib.updateBookList);
+});
