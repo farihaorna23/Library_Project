@@ -43,7 +43,8 @@ class Library {
       let newCheckBox = document.createElement("td");
       newTitle.textContent = titleValue;
       newAuthor.textContent = authorValue;
-      newCheckBox.innerHTML = `<input type="checkbox" checked disabled/>`;
+      let isChecked = checkedValue === true ? "checked" : "";
+      newCheckBox.innerHTML = `<input type="checkbox" ${isChecked} disabled/>`;
       console.log(newTitle, newAuthor, newCheckBox);
       let newRow = document.createElement("tr");
       newRow.append(newTitle, newAuthor, newCheckBox);
@@ -51,8 +52,8 @@ class Library {
       document.querySelector("tbody").insertBefore(newRow, inputRow);
       document.getElementById("title").value = "";
       document.getElementById("author").value = "";
+      this.bookCount += 1;
     });
-
     //nothing shows up even if global scoped variable
     console.log(titleValue, authorValue);
   }
