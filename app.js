@@ -25,6 +25,7 @@ class Library {
     let author = document.getElementById("author");
     let checkedBox = document.getElementById("read");
     let btn = document.getElementById("btn");
+    let inputRow = document.getElementById("inputRow");
 
     let titleValue = "";
     let authorValue = "";
@@ -47,7 +48,9 @@ class Library {
       let newRow = document.createElement("tr");
       newRow.append(newTitle, newAuthor, newCheckBox);
       console.log(newRow);
-      document.querySelector("tbody").appendChild(newRow);
+      document.querySelector("tbody").insertBefore(newRow, inputRow);
+      document.getElementById("title").value = "";
+      document.getElementById("author").value = "";
     });
 
     //nothing shows up even if global scoped variable
