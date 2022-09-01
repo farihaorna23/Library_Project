@@ -77,6 +77,7 @@ class Library {
     document.querySelector("tbody").insertBefore(newRow, inputRow);
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
+    document.getElementById("read").checked = false;
   }
 }
 
