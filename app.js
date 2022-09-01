@@ -44,8 +44,11 @@ class Library {
     this.updateBookList(addBook);
   }
 
-  removeBook() {
-    console.log("hello, remove book works!");
+  removeBook(bookTitle) {
+    console.log(bookTitle);
+    console.log(this.books);
+    this.books = this.books.filter(book => book.title !== bookTitle);
+    console.log(this.books);
   }
 
   updateBookList(obj) {
@@ -57,7 +60,7 @@ class Library {
     let rmButtonCol = document.createElement("td");
     let removeBook = document.createElement("button");
     removeBook.textContent = "Remove Book";
-    removeBook.addEventListener("click", this.removeBook);
+    removeBook.addEventListener("click", () => this.removeBook(obj.title));
     rmButtonCol.appendChild(removeBook);
     newTitle.textContent = obj.title;
     newAuthor.textContent = obj.author;
@@ -76,5 +79,5 @@ class Library {
 let lib = new Library();
 
 btn.addEventListener("click", () => {
-  lib.addBook(lib.books, lib.bookCount, lib.updateBookList);
+  lib.addBook();
 });
