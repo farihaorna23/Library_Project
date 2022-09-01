@@ -44,15 +44,20 @@ class Library {
     this.updateBookList(addBook);
   }
 
-  removeBook(bookTitle) {
-    console.log(bookTitle);
+  removeBook(id) {
+    console.log(id);
     console.log(this.books);
-    this.books = this.books.filter(book => book.title !== bookTitle);
+    this.books = this.books.filter(book => book.id !== id);
     console.log(this.books);
+    for (let i = 0; i < this.books.length; i++) {
+      this.updateBookList(this.books[i]);
+    }
   }
 
+  //recives one book obj
   updateBookList(obj) {
     console.log(obj);
+    let newRow = document.createElement("tr");
     let newTitle = document.createElement("td");
     let newAuthor = document.createElement("td");
     let newCheckBox = document.createElement("td");
@@ -60,14 +65,13 @@ class Library {
     let rmButtonCol = document.createElement("td");
     let removeBook = document.createElement("button");
     removeBook.textContent = "Remove Book";
-    removeBook.addEventListener("click", () => this.removeBook(obj.title));
+    removeBook.addEventListener("click", () => this.removeBook(obj.id));
     rmButtonCol.appendChild(removeBook);
     newTitle.textContent = obj.title;
     newAuthor.textContent = obj.author;
     let isChecked = obj.read === true ? "checked" : "";
     newCheckBox.innerHTML = `<input type="checkbox" ${isChecked} disabled/>`;
     console.log(newTitle, newAuthor, newCheckBox);
-    let newRow = document.createElement("tr");
     newRow.append(newTitle, newAuthor, newCheckBox, addButtonCol, rmButtonCol);
     console.log(newRow);
     document.querySelector("tbody").insertBefore(newRow, inputRow);
