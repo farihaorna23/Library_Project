@@ -62,6 +62,7 @@ class Library {
     let newAuthor = document.createElement("td");
     let newCheckBox = document.createElement("td");
     let addButtonCol = document.createElement("td");
+    let checkBox = document.createElement("input");
     let rmButtonCol = document.createElement("td");
     let removeBook = document.createElement("button");
     removeBook.textContent = "Remove Book";
@@ -69,8 +70,12 @@ class Library {
     rmButtonCol.appendChild(removeBook);
     newTitle.textContent = obj.title;
     newAuthor.textContent = obj.author;
-    let isChecked = obj.read === true ? "checked" : "";
-    newCheckBox.innerHTML = `<input type="checkbox" ${isChecked} disabled/>`;
+    checkBox.type = "checkbox";
+    checkBox.checked = obj.read;
+    checkBox.disabled = obj.read === true ? true : false;
+    console.log(checkBox);
+    checkBox.addEventListener("click", () => this.markRead(checkBox, obj.id));
+    newCheckBox.append(checkBox);
     console.log(newTitle, newAuthor, newCheckBox);
     newRow.append(newTitle, newAuthor, newCheckBox, addButtonCol, rmButtonCol);
     console.log(newRow);
@@ -78,6 +83,18 @@ class Library {
     document.getElementById("title").value = "";
     document.getElementById("author").value = "";
     document.getElementById("read").checked = false;
+  }
+
+  markRead(checkBox, id) {
+    console.log("Mark read is working!");
+    console.log(checkBox);
+    for (let i = 0; i < this.books.length; i++) {
+      if (this.books[i].id === id) {
+        this.books.read = true;
+        checkBox.checked = true;
+        checkBox.disabled = true;
+      }
+    }
   }
 }
 
